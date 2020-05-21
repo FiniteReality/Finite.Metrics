@@ -1,6 +1,6 @@
 # Finite.Metrics #
 
-A metrics library for .NET, written in the style of
+A simple metrics library for .NET, written in the style of
 Microsoft.Extensions.Logging.
 
 ## Why? ##
@@ -28,4 +28,85 @@ such, I decided to start a new abstraction centered around a simple
 `Log<T, TTags>(T value, TTags tags = null)` interface, which could be used to
 log any time-series value; even structured data, if your provider supported it.
 
+## Examples ##
+
+### Configuration ###
+```cs
+namespace MyProject
+{
+    public class Startup
+    {
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration,
+            IWebHostEnvironment environment)
+        {
+            Configuration = configuration;
+            Environment = environment;
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMetrics(builder =>
+            {
+                if (environment.IsDevelopment())
+                    builder.AddOtherProvider();
+                else
+                    builder.AddOpenTsdb(Configuration.GetConnectionString("OpenTSDB"));
+            });
+        }
+    }
+}
+```
+
+### Consumption ###
+
+```cs
+namespace MyProject
+{
+    public class MyService
+    {
+        private readonly IMetric _userAdded;
+        private readonly IMetric _userDeleted;
+
+        public MyService(IMetricFactory metricFactory)
+        {
+            _userAdded = metricFactory.CreateMetric("service.user.add");
+            _userDeleted = metricFactory.CreateMetric("service.user.del");
+        }
+
+        public async Task CreateUserAsync(string id, string name, string language)
+        {
+            using var timer = Metric.Timer(_userAdded, new{
+                language
+            });
+
+            Database.Add(new SomeUser
+            {
+                Id = id,
+                Name = name
+                Language = language
+            });
+        }
+
+        public async Task DeleteUserAsync(SomeUser user)
+        {
+            using var timer = Metric.Timer(_userDeleted);
+            Database.Delete(user);
+        }
+    }
+}
+```
+
+## TODO / Contributing ##
+
+Please see [TODO] for more info.
+
+## License ##
+
+MIT License. Copyright (C) 2019+ Monica S. See [LICENSE] for more info.
+
 [AppMetrics]: https://www.app-metrics.io/
+[TODO]: ./TODO.md
+[LICENSE]: ../LICENSE
