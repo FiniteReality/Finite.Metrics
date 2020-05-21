@@ -7,7 +7,7 @@ namespace Finite.Metrics
     /// instances of <see cref="IMetric"/> form the registered
     /// <see cref="IMetricProvider"/>s.
     /// </summary>
-    public interface IMetricsFactory : IDisposable
+    public interface IMetricFactory : IDisposable
     {
         /// <summary>
         /// Creates a new <see cref="IMetric"/> instance.
