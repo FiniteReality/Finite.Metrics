@@ -2,7 +2,6 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -68,6 +67,8 @@ namespace Finite.Metrics.OpenTsdb
 
                 logs.Clear();
                 _lastLogs = logs;
+
+                await Task.Delay(options.Interval, stoppingToken);
             }
         }
     }
