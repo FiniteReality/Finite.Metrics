@@ -44,7 +44,7 @@ namespace Finite.Metrics.OpenTsdb
                 stoppingToken.ThrowIfCancellationRequested();
                 var options = _options.CurrentValue;
                 using var client = _clientFactory.CreateClient(
-                    options.HttpClientName);
+                    TsdbMetricsOptions.HttpClientName);
 
                 var logs = Interlocked.Exchange(ref _logs, _lastLogs);
 

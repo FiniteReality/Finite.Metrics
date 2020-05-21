@@ -48,7 +48,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
 
             services.TryAdd(ServiceDescriptor
-                .Singleton<IMetricsFactory, MetricsFactory>());
+                .Singleton<IMetricFactory, MetricFactory>());
             services.TryAdd(ServiceDescriptor.Singleton<IMetric, Metric>());
 
             configure(new MetricsBuilder(services));

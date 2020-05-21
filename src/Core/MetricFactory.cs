@@ -9,38 +9,38 @@ namespace Finite.Metrics
     /// Produces instances of <see cref="IMetric"/> classes based on the given
     /// providers.
     /// </summary>
-    public class MetricsFactory : IMetricsFactory
+    public class MetricFactory : IMetricFactory
     {
         private readonly List<IMetricProvider> _providers;
 
         /// <summary>
-        /// Creates a new <see cref="MetricsFactory"/> instance.
+        /// Creates a new <see cref="MetricFactory"/> instance.
         /// </summary>
         /// <param name="providers">
         /// The providers to use in producing <see cref="IMetric"/> instances.
         /// </param>
-        public MetricsFactory(IEnumerable<IMetricProvider> providers)
+        public MetricFactory(IEnumerable<IMetricProvider> providers)
         {
             _providers = providers.ToList();
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="IMetricsFactory"/> configured
+        /// Creates a new instance of <see cref="IMetricFactory"/> configured
         /// using the provided <paramref name="configure"/> delegate.
         /// </summary>
         /// <param name="configure">
         /// A delegate to configure the <see cref="IMetricsBuilder"/>.
         /// </param>
         /// <returns>
-        /// The <see cref="IMetricsFactory"/> that was created.
+        /// The <see cref="IMetricFactory"/> that was created.
         /// </returns>
-        public static IMetricsFactory Create(Action<IMetricsBuilder> configure)
+        public static IMetricFactory Create(Action<IMetricsBuilder> configure)
         {
             var collection = new ServiceCollection();
             _ = collection.AddMetrics(configure);
             var provider = collection.BuildServiceProvider();
 
-            var factory = provider.GetService<IMetricsFactory>();
+            var factory = provider.GetService<IMetricFactory>();
 
             return new DisposingMetricsFactory(factory, provider);
         }
@@ -78,13 +78,13 @@ namespace Finite.Metrics
             }
         }
 
-        private class DisposingMetricsFactory : IMetricsFactory
+        private class DisposingMetricsFactory : IMetricFactory
         {
-            private readonly IMetricsFactory _factory;
+            private readonly IMetricFactory _factory;
 
             private readonly ServiceProvider _services;
 
-            public DisposingMetricsFactory(IMetricsFactory factory,
+            public DisposingMetricsFactory(IMetricFactory factory,
                 ServiceProvider services)
             {
                 _factory = factory;
