@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace Finite.Metrics.Core.UnitTests
+namespace Finite.Metrics.UnitTests
 {
     /// <summary>
     /// Unit tests for <see cref="MetricsServiceCollectionExtensions"/>
@@ -11,7 +11,8 @@ namespace Finite.Metrics.Core.UnitTests
     {
         /// <summary>
         /// Ensures the correct metrics services have been added to the service
-        /// collection when using the AddMetrics extension method.
+        /// collection when using the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection)"/>
+        /// method.
         /// </summary>
         [Test]
         public void MetricsServicesAreAddedToCollection()
@@ -44,7 +45,7 @@ namespace Finite.Metrics.Core.UnitTests
 
         /// <summary>
         /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method is called.
+        /// method calls the passed delegate.
         /// </summary>
         [Test]
         public void AddMetricsWithDelegateCallsDelegate()
@@ -58,10 +59,11 @@ namespace Finite.Metrics.Core.UnitTests
 
         /// <summary>
         /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method is called.
+        /// method calls the passed delegate with an instance of
+        /// <see cref="IMetricsBuilder"/>.
         /// </summary>
         [Test]
-        public void AddMetricsWithDelegateCalledWithIMetricsBuilder()
+        public void AddMetricsWithDelegatePassedIMetricsBuilder()
         {
             var collection = new ServiceCollection();
 
@@ -70,7 +72,8 @@ namespace Finite.Metrics.Core.UnitTests
 
         /// <summary>
         /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method is passed an <see cref="IMetricsBuilder"/>, whose
+        /// method calls the passed delegate with an instance of
+        /// <see cref="IMetricsBuilder"/>, whose
         /// <see cref="IMetricsBuilder.Services"/> property equals the
         /// container we called <c>AddMetrics</c> on.
         /// </summary>

@@ -12,7 +12,7 @@ namespace Finite.Metrics
         {
             var metrics = Metrics;
 
-            if (metrics == null)
+            if (metrics == null || metrics.Length == 0)
                 return;
 
             List<Exception>? exceptions = null;
@@ -48,7 +48,7 @@ namespace Finite.Metrics
         {
             var metrics = Metrics;
 
-            if (metrics == null)
+            if (metrics == null || metrics.Length == 0)
                 return false;
 
             List<Exception>? exceptions = null;
@@ -58,7 +58,7 @@ namespace Finite.Metrics
 
                 try
                 {
-                    if (!metric.IsEnabled())
+                    if (metric.IsEnabled())
                         return true;
                 }
                 catch (Exception ex)

@@ -11,7 +11,8 @@ namespace Finite.Metrics
     /// </summary>
     public class MetricFactory : IMetricFactory
     {
-        private readonly List<IMetricProvider> _providers;
+        // internal for unit testing purposes
+        internal readonly List<IMetricProvider> _providers;
 
         /// <summary>
         /// Creates a new <see cref="MetricFactory"/> instance.
