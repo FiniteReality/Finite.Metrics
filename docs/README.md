@@ -3,6 +3,8 @@
 A simple metrics library for .NET, written in the style of
 Microsoft.Extensions.Logging.
 
+Development packages can be found on my [MyGet] page.
+
 ## Why? ##
 
 I believe recording metrics should be simple and easy. No need for complicated
@@ -107,6 +109,7 @@ Please see [TODO] for more info.
 
 MIT License. Copyright (C) 2019+ Monica S. See [LICENSE] for more info.
 
+[MyGet]: https://www.myget.org/feed/Packages/finitereality
 [AppMetrics]: https://www.app-metrics.io/
 [TODO]: ./TODO.md
 [LICENSE]: ../LICENSE
