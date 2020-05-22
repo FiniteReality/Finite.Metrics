@@ -27,9 +27,10 @@ namespace Finite.Metrics.Configuration
             this IMetricsBuilder builder,
             IConfiguration configuration)
         {
-            builder.AddConfiguration();
+            _ = builder.AddConfiguration();
 
-            builder.Services.AddSingleton(new MetricsConfiguration(configuration));
+            _ = builder.Services.AddSingleton(
+                new MetricsConfiguration(configuration));
 
             return builder;
         }

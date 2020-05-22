@@ -70,14 +70,11 @@ namespace Finite.Metrics
                 }
             }
 
-            if (exceptions != null)
-            {
-                throw new AggregateException(
+            return exceptions != null
+                ? throw new AggregateException(
                     "An error occured while writing to metric(s):",
-                    exceptions);
-            }
-
-            return false;
+                    exceptions)
+                : false;
         }
     }
 }

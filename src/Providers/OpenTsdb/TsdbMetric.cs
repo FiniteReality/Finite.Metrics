@@ -23,9 +23,7 @@ namespace Finite.Metrics.OpenTsdb
         }
 
         public bool IsEnabled()
-        {
-            return true;
-        }
+            => true;
 
         public void Log<T, TTags>(T value, TTags? tags = null)
             where TTags : class

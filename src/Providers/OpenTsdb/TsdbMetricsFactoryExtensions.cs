@@ -66,8 +66,7 @@ namespace Finite.Metrics
             Action<TsdbMetricsOptions> configure)
         {
             _ = builder.AddOpenTsdb(connectionString);
-
-            builder.Services.Configure(configure);
+            _ = builder.Services.Configure(configure);
 
             return builder;
         }
