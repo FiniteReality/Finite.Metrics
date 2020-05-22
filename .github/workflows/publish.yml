@@ -1,0 +1,44 @@
+name: Publish Finite.Metrics to MyGet
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+
+env:
+  MYGET_FEED: https://www.myget.org/F/finitereality/api/v2/package
+  CI: true
+
+jobs:
+
+  build:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100-preview.4.20258.7
+
+      - name: Install dependencies
+        run: dotnet restore -p:IgnoreNative=true
+
+      - name: Build Finite.Metrics
+        run: dotnet build --no-restore --configuration Release -p:IgnoreNative=true
+
+     - name: Run Unit Tests
+       run: dotnet test --no-build --configuration Release -p:IgnoreNative=true
+
+      - name: Pack Finite.Metrics
+        run: dotnet pack --no-build --configuration Release -p:IgnoreNative=true
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: nupkgs
+          path: ${{ github.workspace }}/artifacts/pkg/Release/
+
+      - name: Upload NuGet packages
+        run: for pkg in artifacts/pkg/Release/*.nupkg; do dotnet nuget push "$pkg" -k "${{ secrets.MyGet }}" -s "${{ env.MYGET_FEED }}"; done
+        shell: bash
