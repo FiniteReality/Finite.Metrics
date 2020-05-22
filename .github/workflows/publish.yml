@@ -22,16 +22,16 @@ jobs:
           dotnet-version: 5.0.100-preview.4.20258.7
 
       - name: Install dependencies
-        run: dotnet restore -p:IgnoreNative=true
+        run: dotnet restore
 
       - name: Build Finite.Metrics
-        run: dotnet build --no-restore --configuration Release -p:IgnoreNative=true
+        run: dotnet build --no-restore --configuration Release
 
       - name: Run Unit Tests
-        run: dotnet test --no-build --configuration Release -p:IgnoreNative=true
+        run: dotnet test --no-build --configuration Release
 
       - name: Pack Finite.Metrics
-        run: dotnet pack --no-build --configuration Release -p:IgnoreNative=true
+        run: dotnet pack --no-build --configuration Release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v1.0.0
