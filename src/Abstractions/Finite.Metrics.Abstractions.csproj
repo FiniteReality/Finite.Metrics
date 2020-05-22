@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+
+    <Description>Logging abstractions for Finite.Metrics</Description>
   </PropertyGroup>
 
 </Project>
