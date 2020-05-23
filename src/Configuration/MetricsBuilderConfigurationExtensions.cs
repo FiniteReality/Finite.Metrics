@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Finite.Metrics.Configuration
@@ -31,6 +32,31 @@ namespace Finite.Metrics.Configuration
             builder.Services.TryAddSingleton(
                 typeof(IMetricProviderConfiguration<>),
                 typeof(MetricProviderConfiguration<>));
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Configures an <see cref="IMetricsBuilder"/> from an instance of
+        /// <see cref="IConfiguration"/>.
+        /// </summary>
+        /// <param name="builder">
+        /// The <see cref="IMetricsBuilder"/> to use.
+        /// </param>
+        /// <param name="configuration">
+        /// The <see cref="IConfiguration"/> to add.
+        /// </param>
+        /// <returns>
+        /// The builder.
+        /// </returns>
+        public static IMetricsBuilder AddConfiguration(
+            this IMetricsBuilder builder,
+            IConfiguration configuration)
+        {
+            _ = builder.AddConfiguration();
+
+            _ = builder.Services.AddSingleton(
+                new MetricsConfiguration(configuration));
 
             return builder;
         }
