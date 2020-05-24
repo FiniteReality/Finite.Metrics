@@ -20,11 +20,19 @@
 
   <Import Project="$(MSBuildThisFileDirectory)..\Directory.Build.props" />
 
+  <!-- Coverlet settings -->
+  <PropertyGroup>
+    <CoverletOutput>$(BaseArtifactsPath)coverage/$(MSBuildProjectName).xml</CoverletOutput>
+    <CoverletOutputFormat>opencover</CoverletOutputFormat>
+    <UseSourceLink>true</UseSourceLink>
+  </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).UnitTests" PublicKey="$(AssemblyOriginatorPublicKey)" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" IsImplicitlyDefined="true" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" IsImplicitlyDefined="true" PrivateAssets="all" />
     <PackageReference Include="NUnit" IsImplicitlyDefined="true" />
     <PackageReference Include="NUnit3TestAdapter" IsImplicitlyDefined="true" />

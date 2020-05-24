@@ -21,6 +21,7 @@
 
   <!-- Package versions for package references across all projects -->
   <ItemGroup>
+    <PackageReference Update="coverlet.msbuild" Version="2.8.1" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.2.20160.3" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="5.0.0-preview.2.20160.3" />
     <PackageReference Update="Microsoft.Extensions.Http" Version="5.0.0-preview.2.20160.3" />

@@ -27,7 +27,13 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run Unit Tests
-        run: dotnet test --no-build --configuration Release
+        run: dotnet test --no-build --configuration Release /p:CollectCoverage=true
+
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CodeCov }}
+          file: ${{ github.workspace }}/artifacts/coverage/*.xml
 
       - name: Pack Finite.Metrics
         run: dotnet pack --no-build --configuration Release
