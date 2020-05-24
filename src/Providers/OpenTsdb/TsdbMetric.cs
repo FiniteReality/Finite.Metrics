@@ -25,6 +25,16 @@ namespace Finite.Metrics.OpenTsdb
         public bool IsEnabled()
             => true;
 
+        public void Log<T>(T value)
+        {
+            _uploader.AddLogEntry(new TsdbPutRequest
+            {
+                Metric = _name,
+                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                Value = value!
+            });
+        }
+
         public void Log<T, TTags>(T value, TTags? tags = null)
             where TTags : class
         {

@@ -77,8 +77,9 @@ namespace Finite.Metrics.UnitTests
         }
 
         /// <summary>
-        /// Ensures that <see cref="Metric.Log{T, TTags}(T, TTags)"/> does
-        /// nothing when <see cref="Metric.IsEnabled"/> return false.
+        /// Ensures that <see cref="Metric.Log{T}(T)"/> and
+        /// <see cref="Metric.Log{T, TTags}(T, TTags)"/> do nothing when
+        /// <see cref="Metric.IsEnabled"/> return false.
         /// </summary>
         [Test]
         public void LogWhenDisabledIsIgnored()
@@ -88,16 +89,15 @@ namespace Finite.Metrics.UnitTests
                 Metrics = new[] { new DisabledAndThrowingMetric() }
             };
 
-            // Parameters here should not matter as they should be passed right
-            // through to the underlying provider metric, if it's enabled.
+            Assert.DoesNotThrow(() => metric.Log(1));
             Assert.DoesNotThrow(() => metric.Log(1, metric));
         }
 
         /// <summary>
-        /// Ensures that <see cref="Metric.Log{T, TTags}(T, TTags)"/> throws an
-        /// instance of <see cref="AggregateException"/> if any of the metrics
-        /// throw, and that the thrown exception contains all of the correct
-        /// exceptions.
+        /// Ensures that <see cref="Metric.Log{T}(T)"/> and
+        /// <see cref="Metric.Log{T, TTags}(T, TTags)"/> throws an instance of
+        /// <see cref="AggregateException"/> if any of the metrics throw, and
+        /// that the thrown exception contains all of the correct exceptions.
         /// </summary>
         [Test]
         public void LogWhenEnabledThrowsAggregateException()
@@ -107,8 +107,14 @@ namespace Finite.Metrics.UnitTests
                 Metrics = new[] { new EnabledButThrowingMetric() }
             };
 
-
             var exception = Assert.Throws<AggregateException>(
+                () => metric.Log(1));
+
+            Assert.AreEqual(1, exception.InnerExceptions.Count);
+            Assert.IsInstanceOf<NotImplementedException>(
+                exception.InnerExceptions[0]);
+
+            exception = Assert.Throws<AggregateException>(
                 () => metric.Log(1, metric));
 
             Assert.AreEqual(1, exception.InnerExceptions.Count);

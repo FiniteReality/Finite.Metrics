@@ -30,7 +30,18 @@ namespace Finite.Metrics
         /// <typeparam name="TTags">
         /// The type of tags to supply.
         /// </typeparam>
-        void Log<T, TTags>(T value, TTags? tags = null)
+        void Log<T, TTags>(T value, TTags tags)
             where TTags : class;
+
+        /// <summary>
+        /// Writes a metrics entry.
+        /// </summary>
+        /// <param name="value">
+        /// The value that will be written.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of value to write.
+        /// </typeparam>
+        void Log<T>(T value);
     }
 }

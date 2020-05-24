@@ -7,7 +7,43 @@ namespace Finite.Metrics
     {
         public IMetric[] Metrics { get; set; } = null!;
 
-        public void Log<T, TTags>(T value, TTags? tags = null)
+        public void Log<T>(T value)
+        {
+            var metrics = Metrics;
+
+            if (metrics == null || metrics.Length == 0)
+                return;
+
+            List<Exception>? exceptions = null;
+            for (var x = 0; x < metrics.Length; x++)
+            {
+                var metric = metrics[x];
+
+                if (!metric.IsEnabled())
+                    continue;
+
+                try
+                {
+                    metric.Log(value);
+                }
+                catch (Exception ex)
+                {
+                    if (exceptions == null)
+                        exceptions = new List<Exception>();
+
+                    exceptions.Add(ex);
+                }
+            }
+
+            if (exceptions != null)
+            {
+                throw new AggregateException(
+                    "An error occured while writing to metric(s):",
+                    exceptions);
+            }
+        }
+
+        public void Log<T, TTags>(T value, TTags tags)
             where TTags : class
         {
             var metrics = Metrics;

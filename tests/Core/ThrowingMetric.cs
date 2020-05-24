@@ -13,6 +13,9 @@ namespace Finite.Metrics.UnitTests
         public bool IsEnabled()
             => throw new NotImplementedException();
 
+        public void Log<T>(T value)
+            => throw new NotImplementedException();
+
         public void Log<T, TTags>(T value, TTags? tags = null)
             where TTags : class
             => throw new NotImplementedException();
