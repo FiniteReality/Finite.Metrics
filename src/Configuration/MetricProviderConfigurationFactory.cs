@@ -17,7 +17,7 @@ namespace Finite.Metrics.Configuration
 
         public IConfiguration GetConfiguration(Type providerType)
         {
-            if (providerType == null)
+            if (providerType is null)
                 throw new ArgumentNullException(nameof(providerType));
 
             var fullName = providerType.FullName;

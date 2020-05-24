@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services,
             Action<IMetricsBuilder> configure)
         {
-            if (services == null)
+            if (services is null)
                 throw new ArgumentNullException(nameof(services));
 
             services.TryAdd(ServiceDescriptor

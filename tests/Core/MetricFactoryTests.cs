@@ -33,6 +33,25 @@ namespace Finite.Metrics.UnitTests
             => Assert.NotNull(MetricFactory.Create(_ => { }));
 
         /// <summary>
+        /// Ensures that
+        /// <see cref="MetricFactory.Create(Action{IMetricsBuilder})"/>
+        /// returns an instance of <see cref="IMetricFactory"/>, whose methods
+        /// do not throw.
+        /// </summary>
+        [Test]
+        public void CreateReturnsSafeFactory()
+        {
+            var factory = MetricFactory.Create(_ => { });
+
+            Assert.DoesNotThrow(
+                () => factory.AddProvider(new NonThrowingMetricProvider()));
+            Assert.DoesNotThrow(
+                () => factory.CreateMetric("test"));
+            Assert.DoesNotThrow(
+                () => factory.Dispose());
+        }
+
+        /// <summary>
         /// Ensures that <see cref="MetricFactory(System.Collections.Generic.IEnumerable{IMetricProvider})"/>
         /// populates the internal list of providers with the given enumerable.
         /// </summary>
@@ -44,6 +63,28 @@ namespace Finite.Metrics.UnitTests
             });
 
             Assert.IsNotEmpty(factory._providers);
+        }
+
+        /// <summary>
+        /// Ensures that
+        /// <see cref="MetricFactory.AddProvider(IMetricProvider)"/> throws an
+        /// throws an instance of <see cref="ArgumentNullException"/> when
+        /// <c>null</c> is passed as a parameter, and that the exception's
+        /// <see cref="ArgumentException.ParamName"/> property was the expected
+        /// parameter name.
+        /// </summary>
+        [Test]
+        public void AddProviderPopulatesInternalProviderList()
+        {
+            var factory = new MetricFactory(Array.Empty<IMetricProvider>());
+
+            var method = factory.GetType().GetMethod("AddProvider")!;
+            var parameter = method.GetParameters().First();
+
+            var ex = Assert.Throws<ArgumentNullException>(
+                () => factory.AddProvider(null!));
+
+            Assert.AreEqual(parameter.Name, ex.ParamName);
         }
 
         /// <summary>
@@ -68,7 +109,8 @@ namespace Finite.Metrics.UnitTests
         [Test]
         public void DisposeSwallowsExceptions()
         {
-            var factory = new MetricFactory(new[]{
+            var factory = new MetricFactory(new IMetricProvider[]{
+                new NonThrowingMetricProvider(),
                 new ThrowingMetricProvider()
             });
 
@@ -99,6 +141,25 @@ namespace Finite.Metrics.UnitTests
             var factory = new MetricFactory(Array.Empty<IMetricProvider>());
 
             Assert.NotNull(factory.CreateMetric("A name"));
+        }
+
+        /// <summary>
+        /// Ensures that <see cref="MetricFactory.CreateMetric(string)"/>
+        /// returns an instance of <see cref="Metric"/> whose
+        /// <see cref="Metric.Metrics"/> property is non-empty.
+        /// </summary>
+        [Test]
+        public void CreateMetricReturnsNonEmptyMetric()
+        {
+            var factory = new MetricFactory(new[]
+            {
+                new NonThrowingMetricProvider()
+            });
+
+            var metric = factory.CreateMetric("A name") as Metric;
+
+            Assert.NotNull(metric);
+            Assert.IsNotEmpty(metric!.Metrics);
         }
     }
 }

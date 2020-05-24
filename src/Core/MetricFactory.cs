@@ -48,7 +48,11 @@ namespace Finite.Metrics
 
         /// <inheritdoc/>
         public void AddProvider(IMetricProvider provider)
-            => _providers.Add(provider);
+        {
+            if (provider is null)
+                throw new ArgumentNullException(nameof(provider));
+            _providers.Add(provider);
+        }
 
         /// <inheritdoc/>
         public IMetric CreateMetric(string metricName)
