@@ -10,10 +10,4 @@
     <ProjectReference Include="../../src/Configuration/Finite.Metrics.Configuration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
-
 </Project>
