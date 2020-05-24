@@ -80,7 +80,7 @@ namespace MyProject
 
         public async Task CreateUserAsync(string id, string name, string language)
         {
-            using var timer = Metric.Timer(_userAdded, new{
+            using var timer = Measure.Duration(_userAdded, new{
                 language
             });
 
@@ -94,7 +94,7 @@ namespace MyProject
 
         public async Task DeleteUserAsync(SomeUser user)
         {
-            using var timer = Metric.Timer(_userDeleted);
+            using var timer = Measure.Duration(_userDeleted);
             Database.Delete(user);
         }
     }
