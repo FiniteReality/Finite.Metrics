@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - 'docs/**'
+  pull_request:
 
 env:
   MYGET_FEED: https://www.myget.org/F/finitereality/api/v2/package
