@@ -1,5 +1,9 @@
 # Finite.Metrics #
 
+![Build Status](https://github.com/FiniteReality/Finite.Metrics/workflows/Publish%20Finite.Metrics%20to%20MyGet/badge.svg?branch=master)
+[![Code Coverage](https://codecov.io/gh/FiniteReality/Finite.Metrics/branch/master/graph/badge.svg)](https://codecov.io/gh/FiniteReality/Finite.Metrics)
+
+
 A simple metrics library for .NET, written in the style of
 Microsoft.Extensions.Logging.
 
