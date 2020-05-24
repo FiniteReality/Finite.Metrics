@@ -74,7 +74,7 @@ namespace Finite.Metrics.UnitTests
         /// parameter name.
         /// </summary>
         [Test]
-        public void AddProviderPopulatesInternalProviderList()
+        public void AddProviderThrowsArgumentNullException()
         {
             var factory = new MetricFactory(Array.Empty<IMetricProvider>());
 
