@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace Configuration
+namespace Finite.Metrics.Configuration.UnitTests
 {
     /// <summary>
     /// Unit tests for <see cref="MetricsBuilderConfigurationExtensions"/>
@@ -31,7 +31,8 @@ namespace Configuration
             var hasProviderConfiguration = services.Any(
                 x => x.ServiceType == typeof(IMetricProviderConfiguration<>));
 
-            Assert.True(hasProviderConfigFactory && hasProviderConfiguration);
+            Assert.True(hasProviderConfigFactory);
+            Assert.True(hasProviderConfiguration);
         }
 
          /// <summary>

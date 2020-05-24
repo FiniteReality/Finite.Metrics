@@ -26,7 +26,8 @@ namespace Finite.Metrics.UnitTests
             var hasIMetric = collection.Any(
                 x => x.ServiceType == typeof(IMetric));
 
-            Assert.True(hasIMetricFactory && hasIMetric);
+            Assert.True(hasIMetricFactory);
+            Assert.True(hasIMetric);
         }
 
         /// <summary>
