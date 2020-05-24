@@ -79,6 +79,27 @@ namespace Finite.Metrics.UnitTests
         /// <summary>
         /// Ensures that <see cref="Metric.Log{T}(T)"/> and
         /// <see cref="Metric.Log{T, TTags}(T, TTags)"/> do nothing when
+        /// no provider metrics are present.
+        /// </summary>
+        [Test]
+        public void LogWithNoMetricsIsIgnored()
+        {
+            var metric = new Metric();
+
+            // metric.Metrics == null
+            Assert.DoesNotThrow(() => metric.Log(1));
+            Assert.DoesNotThrow(() => metric.Log(1, metric));
+
+            // metric.Metrics.Length == 0
+            metric.Metrics = Array.Empty<IMetric>();
+
+            Assert.DoesNotThrow(() => metric.Log(1));
+            Assert.DoesNotThrow(() => metric.Log(1, metric));
+        }
+
+        /// <summary>
+        /// Ensures that <see cref="Metric.Log{T}(T)"/> and
+        /// <see cref="Metric.Log{T, TTags}(T, TTags)"/> do nothing when
         /// <see cref="Metric.IsEnabled"/> return false.
         /// </summary>
         [Test]
@@ -120,6 +141,23 @@ namespace Finite.Metrics.UnitTests
             Assert.AreEqual(1, exception.InnerExceptions.Count);
             Assert.IsInstanceOf<NotImplementedException>(
                 exception.InnerExceptions[0]);
+        }
+
+        /// <summary>
+        /// Ensures that <see cref="Metric.Log{T}(T)"/> and
+        /// <see cref="Metric.Log{T, TTags}(T, TTags)"/> does not throw when
+        /// all provider metrics return successfully.
+        /// </summary>
+        [Test]
+        public void LogDoesNotThrow()
+        {
+            var metric = new Metric()
+            {
+                Metrics = new[] { new EnabledNonThrowingMetric() }
+            };
+
+            Assert.DoesNotThrow(() => metric.Log(1));
+            Assert.DoesNotThrow(() => metric.Log(1, metric));
         }
     }
 }
