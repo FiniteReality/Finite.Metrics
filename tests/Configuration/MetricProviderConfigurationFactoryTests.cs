@@ -13,10 +13,10 @@ namespace Finite.Metrics.Configuration.UnitTests
     {
         /// <summary>
         /// Ensures that <see cref="MetricProviderConfigurationFactory.GetConfiguration(Type)"/>
-        /// throws an instance of <see cref="ArgumentNullException"/>
-        /// when <c>null</c> is passed as a parameter, and that the exception's
-        /// <see cref="ArgumentException.ParamName"/> parameter was the
-        /// expected parameter.
+        /// throws an instance of <see cref="ArgumentNullException"/> when
+        /// <c>null</c> is passed as a parameter, and that the exception's
+        /// <see cref="ArgumentException.ParamName"/> property was the expected
+        /// parameter name.
         /// </summary>
         [Test]
         public void GetConfigurationThrowsArgumentNullException()

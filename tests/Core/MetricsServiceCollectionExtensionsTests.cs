@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -9,6 +10,30 @@ namespace Finite.Metrics.UnitTests
     /// </summary>
     public class MetricsServiceCollectionExtensionsTests
     {
+        /// <summary>
+        /// Ensures that <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, Action{IMetricsBuilder})"/>
+        /// throws an instance of <see cref="ArgumentNullException"/> when
+        /// <c>null</c> is passed as a parameter, and that the exception's
+        /// <see cref="ArgumentException.ParamName"/> property was the expected
+        /// parameter name.
+        /// </summary>
+        [Test]
+        public void AddMetricsThrowsForNullServiceCollection()
+        {
+            var method = typeof(MetricsServiceCollectionExtensions)
+                .GetMethod("AddMetrics", new[]
+                {
+                    typeof(IServiceCollection),
+                    typeof(Action<IMetricsBuilder>)
+                })!;
+            var parameter = method.GetParameters().First();
+
+            var ex = Assert.Throws<ArgumentNullException>(
+                () => MetricsServiceCollectionExtensions.AddMetrics(null!));
+
+            Assert.AreEqual(parameter.Name, ex.ParamName);
+        }
+
         /// <summary>
         /// Ensures the correct metrics services have been added to the service
         /// collection when using the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection)"/>
