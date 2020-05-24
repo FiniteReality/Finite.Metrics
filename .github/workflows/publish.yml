@@ -30,10 +30,8 @@ jobs:
         run: dotnet test --no-build --configuration Release /p:CollectCoverage=true
 
       - name: Upload code coverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CodeCov }}
-          file: ${{ github.workspace }}/artifacts/coverage/*.xml
+        run: bash <(curl -s https://codecov.io/bash) -s "${{ github.workspace }}/artifacts/coverage/" -f "*.xml"
+        shell: bash
 
       - name: Pack Finite.Metrics
         run: dotnet pack --no-build --configuration Release
