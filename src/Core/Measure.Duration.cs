@@ -52,6 +52,9 @@ namespace Finite.Metrics
 
             internal DurationMeasure(IMetric metric)
             {
+                if (metric is null)
+                    throw new ArgumentNullException(nameof(metric));
+
                 _metric = metric;
                 _timer = Stopwatch.StartNew();
             }
@@ -82,6 +85,9 @@ namespace Finite.Metrics
 
             internal DurationMeasure(IMetric metric, TTags tags)
             {
+                if (metric is null)
+                    throw new ArgumentNullException(nameof(metric));
+
                 _metric = metric;
                 _tags = tags;
                 _timer = Stopwatch.StartNew();
