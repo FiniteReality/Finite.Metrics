@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
+using PropertyGetter = System.Func<object, object>;
 using ToDict = System.Func<object?,
-    System.Collections.Generic.IDictionary<string, string>?>;
+    System.Collections.Generic.IDictionary<string, object>>;
 
 namespace Finite.Metrics.OpenTsdb
 {
@@ -12,6 +15,9 @@ namespace Finite.Metrics.OpenTsdb
     {
         private static readonly ConcurrentDictionary<Type, ToDict> TagsGetters
             = new ConcurrentDictionary<Type, ToDict>();
+        private static readonly ConcurrentDictionary<
+            (Type, Type), PropertyGetter> PropertyGetterHelpers
+                = new ConcurrentDictionary<(Type, Type), PropertyGetter>();
 
         private readonly string _name;
         private readonly TsdbMetricsUploader _uploader;
@@ -30,8 +36,8 @@ namespace Finite.Metrics.OpenTsdb
             _uploader.AddLogEntry(new TsdbPutRequest
             {
                 Metric = _name,
-                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                Value = value!
+                Value = value!,
+                Tags = new Dictionary<string, object>()
             });
         }
 
@@ -43,7 +49,6 @@ namespace Finite.Metrics.OpenTsdb
             _uploader.AddLogEntry(new TsdbPutRequest
             {
                 Metric = _name,
-                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 Value = value!,
                 Tags = getter(tags)
             });
@@ -54,25 +59,49 @@ namespace Finite.Metrics.OpenTsdb
                     .Where(x => x.GetMethod != null);
                 var getters = properties.Select(
                     x => new {
-                        Method = (Func<object, object>)x.GetMethod!
-                            .CreateDelegate(typeof(Func<object, object>)),
+                        Method = PropertyGetterHelpers
+                            .GetOrAdd((x.DeclaringType!, x.PropertyType),
+                                (_) => MakeGetter(x.GetMethod!)),
                         x.Name
                     });
 
                 return (o) =>
                 {
-                    var dict = new Dictionary<string, string>();
+                    var dict = new Dictionary<string, object>();
 
                     if (o is {})
                         foreach (var getter in getters)
                         {
-                            dict[getter.Name]
-                                = getter.Method(o).ToString() ?? "";
+                            dict[getter.Name] = getter.Method(o);
                         }
 
                     return dict;
                 };
             }
+
+            static PropertyGetter MakeGetter(MethodInfo method)
+            {
+                var helper = MakeGetterHelperMethod.MakeGenericMethod(new []{
+                    method.DeclaringType!,
+                    method.ReturnType!
+                });
+
+                return (PropertyGetter)helper!.Invoke(null, new[] {
+                    method
+                })!;
+            }
+        }
+
+        private static readonly MethodInfo MakeGetterHelperMethod
+            = typeof(TsdbMetric).GetMethod(nameof(MakeGetterHelper),
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+        private static PropertyGetter MakeGetterHelper<TType, TValue>(
+            MethodInfo method)
+        {
+            var func = (Func<TType, TValue>)method
+                .CreateDelegate(typeof(Func<TType, TValue>));
+
+            return (o) => func((TType)o)!;
         }
     }
 }

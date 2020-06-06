@@ -34,6 +34,9 @@ namespace Finite.Metrics
 
             _ = builder.AddConfiguration();
 
+            builder.Services.TryAddSingleton
+                <ISystemClock, DefaultSystemClock>();
+
             builder.Services.TryAddSingleton<TsdbMetricsUploader>();
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IMetricProvider, TsdbMetricProvider>());

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Finite.Metrics.OpenTsdb
 {
@@ -23,5 +24,12 @@ namespace Finite.Metrics.OpenTsdb
         /// Gets or sets the endpoint used to upload metrics to OpenTSDB.
         /// </summary>
         public string UploadMetricsEndpoint { get; set; } = "/api/put";
+
+        /// <summary>
+        /// Gets or sets the default tags to apply to metrics uploaded to
+        /// OpenTSDB.
+        /// </summary>
+        public IDictionary<string, string> DefaultTags { get; set; }
+            = new Dictionary<string, string>();
     }
 }
