@@ -5,7 +5,7 @@ namespace Finite.Metrics.OpenTsdb
     /// <summary>
     /// Options used by the OpenTSDB metrics provider.
     /// </summary>
-    public class TsdbMetricsOptions
+    public class OpenTsdbMetricsOptions
     {
         /// <summary>
         /// Gets the name of the HTTP client used by OpenTSDB.

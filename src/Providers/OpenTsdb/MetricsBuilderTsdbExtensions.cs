@@ -10,7 +10,7 @@ namespace Finite.Metrics
     /// <summary>
     /// OpenTSDB extensions for <see cref="IMetricsBuilder"/>.
     /// </summary>
-    public static class TsdbMetricsFactoryExtensions
+    public static class MetricsBuilderOpenTsdbExtensions
     {
         /// <summary>
         /// Adds an OpenTSDB provider named 'OpenTSDB' to the factory.
@@ -27,6 +27,9 @@ namespace Finite.Metrics
         public static IMetricsBuilder AddOpenTsdb(this IMetricsBuilder builder,
             string connectionString)
         {
+            if (connectionString is null)
+                throw new ArgumentNullException(nameof(connectionString));
+
             var baseAddress = new Uri(connectionString, UriKind.Absolute);
 
             _ = builder.AddConfiguration();
@@ -36,14 +39,14 @@ namespace Finite.Metrics
                 .Singleton<IMetricProvider, TsdbMetricProvider>());
 
             MetricProviderOptions.RegisterProviderOptions
-                <TsdbMetricsOptions, TsdbMetricProvider>(builder.Services);
+                <OpenTsdbMetricsOptions, TsdbMetricProvider>(builder.Services);
 
             _ = builder.Services.AddHostedService(
                 services => services
                     .GetRequiredService<TsdbMetricsUploader>());
 
             _ = builder.Services.AddHttpClient(
-                TsdbMetricsOptions.HttpClientName,
+                OpenTsdbMetricsOptions.HttpClientName,
                 (client) => client.BaseAddress = baseAddress);
 
             return builder;
@@ -66,7 +69,7 @@ namespace Finite.Metrics
         /// </returns>
         public static IMetricsBuilder AddOpenTsdb(this IMetricsBuilder builder,
             string connectionString,
-            Action<TsdbMetricsOptions> configure)
+            Action<OpenTsdbMetricsOptions> configure)
         {
             _ = builder.AddOpenTsdb(connectionString);
             _ = builder.Services.Configure(configure);

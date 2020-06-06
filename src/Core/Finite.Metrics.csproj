@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Finite.Metrics.Configuration.UnitTests" />
+    <InternalsVisibleTo Include="Finite.Metrics.OpenTsdb.UnitTests" />
   </ItemGroup>
 
   <ItemGroup>

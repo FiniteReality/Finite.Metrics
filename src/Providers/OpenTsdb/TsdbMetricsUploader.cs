@@ -14,14 +14,14 @@ namespace Finite.Metrics.OpenTsdb
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly ILogger _logger;
-        private readonly IOptionsMonitor<TsdbMetricsOptions> _options;
+        private readonly IOptionsMonitor<OpenTsdbMetricsOptions> _options;
 
         private ConcurrentBag<TsdbPutRequest> _lastLogs;
         private ConcurrentBag<TsdbPutRequest> _logs;
 
         public TsdbMetricsUploader(IHttpClientFactory clientFactory,
             ILogger<TsdbMetricsUploader> logger,
-            IOptionsMonitor<TsdbMetricsOptions> options)
+            IOptionsMonitor<OpenTsdbMetricsOptions> options)
             : base()
         {
             _clientFactory = clientFactory;
@@ -43,7 +43,7 @@ namespace Finite.Metrics.OpenTsdb
                 stoppingToken.ThrowIfCancellationRequested();
                 var options = _options.CurrentValue;
                 using var client = _clientFactory.CreateClient(
-                    TsdbMetricsOptions.HttpClientName);
+                    OpenTsdbMetricsOptions.HttpClientName);
 
                 var logs = Interlocked.Exchange(ref _logs, _lastLogs);
 
