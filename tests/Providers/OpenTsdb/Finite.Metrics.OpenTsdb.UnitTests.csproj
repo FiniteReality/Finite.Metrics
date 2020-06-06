@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <Include>[Finite.Metrics.OpenTsdb]*</Include>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Providers/OpenTsdb/Finite.Metrics.OpenTsdb.csproj"/>
+  </ItemGroup>
+
+
+</Project>
