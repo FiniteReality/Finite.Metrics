@@ -27,7 +27,7 @@ namespace Finite.Metrics.OpenTsdb.UnitTests
             var builder = new MetricsBuilder(services);
 
             _ = Assert.Throws<UriFormatException>(
-                () => _ = builder.AddOpenTsdb("http://localhost/"));
+                () => _ = builder.AddOpenTsdb("invalid uri text"));
 
             _ = Assert.Throws<ArgumentNullException>(
                 () => _ = builder.AddOpenTsdb(null!));
@@ -79,7 +79,7 @@ namespace Finite.Metrics.OpenTsdb.UnitTests
             var builder = new MetricsBuilder(services);
 
             _ = Assert.Throws<UriFormatException>(
-                () => _ = builder.AddOpenTsdb("http://localhost/",
+                () => _ = builder.AddOpenTsdb("invalid uri text",
                     options => { }));
 
             _ = Assert.Throws<ArgumentNullException>(
