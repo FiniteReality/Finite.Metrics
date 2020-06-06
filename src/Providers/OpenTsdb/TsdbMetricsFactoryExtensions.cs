@@ -31,13 +31,16 @@ namespace Finite.Metrics
 
             _ = builder.AddConfiguration();
 
+            builder.Services.TryAddSingleton<TsdbMetricsUploader>();
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IMetricProvider, TsdbMetricProvider>());
 
             MetricProviderOptions.RegisterProviderOptions
                 <TsdbMetricsOptions, TsdbMetricProvider>(builder.Services);
 
-            _ = builder.Services.AddHostedService<TsdbMetricsUploader>();
+            _ = builder.Services.AddHostedService(
+                services => services
+                    .GetRequiredService<TsdbMetricsUploader>());
 
             _ = builder.Services.AddHttpClient(
                 TsdbMetricsOptions.HttpClientName,
