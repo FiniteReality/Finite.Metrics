@@ -88,6 +88,9 @@ namespace Finite.Metrics.OpenTsdb
                 var options = _options.CurrentValue;
                 await Task.Delay(options.Interval, stoppingToken);
 
+                if (_logs.IsEmpty)
+                    continue;
+
                 using var client = _clientFactory.CreateClient(
                     OpenTsdbMetricsOptions.HttpClientName);
 

@@ -18,7 +18,7 @@ namespace Finite.Metrics.OpenTsdb
         /// Gets or sets the interval to wait for between uploading metrics to
         /// OpenTSDB.
         /// </summary>
-        public TimeSpan Interval { get; set; }
+        public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// Gets or sets the endpoint used to upload metrics to OpenTSDB.
