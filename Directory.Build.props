@@ -48,7 +48,7 @@
     <PackageOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseArtifactsPath)pkg/$(Configuration)</PackageOutputPath>
     <PackageOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseArtifactsPath)pkg/$(Configuration)</PackageOutputPath>
     <Product>Finite.Metrics</Product>
-    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionPrefix>0.2.0</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <VersionSuffix Condition="'$(PullRequestNumber)' != ''">pr$(PullRequestNumber)</VersionSuffix>
   </PropertyGroup>

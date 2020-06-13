@@ -13,11 +13,7 @@ namespace Finite.Metrics.UnitTests
         public bool IsEnabled()
             => false;
 
-        public void Log<T>(T value)
-            => throw new NotImplementedException();
-
-        public void Log<T, TTags>(T value, TTags? tags = null)
-            where TTags : class
+        public void Log<T>(T value, TagValues? tags = null)
             => throw new NotImplementedException();
     }
 }

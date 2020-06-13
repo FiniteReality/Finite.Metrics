@@ -15,6 +15,6 @@ namespace Finite.Metrics.OpenTsdb
         public object Value { get; set; }
 
         [JsonPropertyName("tags")]
-        public IDictionary<string, object> Tags { get; set; }
+        public IDictionary<string, object?> Tags { get; set; }
     }
 }
