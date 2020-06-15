@@ -18,14 +18,12 @@ namespace Finite.Metrics.OpenTsdb
             => true;
 
         public void Log<T>(T value, TagValues? tags = null)
-        {
-            _uploader.AddLogEntry(new TsdbPutRequest
+            => _uploader.AddLogEntry(new TsdbPutRequest
             {
                 Metric = _name,
                 Value = value!,
                 Tags = tags?.ToDictionary(x => x.Key, x => x.Value)
                     ?? new Dictionary<string, object?>()
             });
-        }
     }
 }

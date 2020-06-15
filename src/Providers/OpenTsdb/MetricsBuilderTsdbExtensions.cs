@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http;
 using Finite.Metrics.Configuration;
 using Finite.Metrics.OpenTsdb;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,7 @@ namespace Finite.Metrics
     public static class MetricsBuilderOpenTsdbExtensions
     {
         /// <summary>
-        /// Adds an OpenTSDB provider named 'OpenTSDB' to the factory.
+        /// Adds an OpenTSDB provider to the factory.
         /// </summary>
         /// <param name="builder">
         /// The <see cref="IMetricsBuilder"/> to use.
@@ -56,7 +55,7 @@ namespace Finite.Metrics
         }
 
         /// <summary>
-        /// Adds an OpenTSDB provider named 'OpenTSDB' to the factory.
+        /// Adds an OpenTSDB provider to the factory.
         /// </summary>
         /// <param name="builder">
         /// The <see cref="IMetricsBuilder"/> to use.

@@ -1,9 +1,10 @@
 using System;
+using Finite.Metrics.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Finite.Metrics.Configuration
+namespace Finite.Metrics
 {
     /// <summary>
     /// Extension methods for setting up metrics services in an
