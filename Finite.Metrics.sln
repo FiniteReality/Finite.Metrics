@@ -27,9 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finite.Metrics.OpenTsdb.Uni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prometheus", "Prometheus", "{EB50151D-8AD4-4D58-BE3A-CD5EFE1E0621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finite.Metrics.Prometheus", "src\Providers\Prometheus\Core\Finite.Metrics.Prometheus.csproj", "{A4F1FDE6-C192-4F7D-B848-39E462783AAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finite.Metrics.Prometheus.Core", "src\Providers\Prometheus\Core\Finite.Metrics.Prometheus.Core.csproj", "{A4F1FDE6-C192-4F7D-B848-39E462783AAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finite.Metrics.Prometheus.AspNetCore", "src\Providers\Prometheus\AspNetCore\Finite.Metrics.Prometheus.AspNetCore.csproj", "{EADC0DC7-668B-4F94-9304-572B64D3FE67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finite.Metrics.Prometheus.HostedService", "src\Providers\Prometheus\HostedService\Finite.Metrics.Prometheus.HostedService.csproj", "{693B8847-B557-4B0D-BDF5-238C1DDF14AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +154,18 @@ Global
 		{EADC0DC7-668B-4F94-9304-572B64D3FE67}.Release|x64.Build.0 = Release|Any CPU
 		{EADC0DC7-668B-4F94-9304-572B64D3FE67}.Release|x86.ActiveCfg = Release|Any CPU
 		{EADC0DC7-668B-4F94-9304-572B64D3FE67}.Release|x86.Build.0 = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|x64.Build.0 = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|x64.ActiveCfg = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|x64.Build.0 = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9E815B92-5565-46FA-A666-18BC0D5333DA} = {7C493A69-008A-4F4B-9AC1-23A64682C4AB}
@@ -166,5 +180,6 @@ Global
 		{EB50151D-8AD4-4D58-BE3A-CD5EFE1E0621} = {13420B5B-28D6-40FF-B378-82E6FB742AB4}
 		{A4F1FDE6-C192-4F7D-B848-39E462783AAA} = {EB50151D-8AD4-4D58-BE3A-CD5EFE1E0621}
 		{EADC0DC7-668B-4F94-9304-572B64D3FE67} = {EB50151D-8AD4-4D58-BE3A-CD5EFE1E0621}
+		{693B8847-B557-4B0D-BDF5-238C1DDF14AE} = {EB50151D-8AD4-4D58-BE3A-CD5EFE1E0621}
 	EndGlobalSection
 EndGlobal

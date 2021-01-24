@@ -2,10 +2,10 @@ namespace Finite.Metrics.Prometheus
 {
     internal class PrometheusMetric : IMetric
     {
-        private readonly PrometheusMetricStore _metricStore;
+        private readonly IPrometheusMetricStore _metricStore;
         private readonly string _name;
 
-        public PrometheusMetric(PrometheusMetricStore metricStore,
+        public PrometheusMetric(IPrometheusMetricStore metricStore,
             string name)
         {
             _metricStore = metricStore;

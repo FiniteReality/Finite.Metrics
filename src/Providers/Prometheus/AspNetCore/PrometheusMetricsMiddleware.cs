@@ -6,30 +6,26 @@ using Microsoft.Extensions.Options;
 
 namespace Finite.Metrics.Prometheus.AspNetCore
 {
-    internal class PrometheusMetricsMiddleware
+    internal class PrometheusMetricsMiddleware : IMiddleware
     {
         private readonly ILogger<PrometheusMetricsMiddleware> _logger;
         private readonly IPrometheusMetricStore _metricStore;
-        private readonly RequestDelegate _next;
         private readonly PrometheusOptions _options;
 
         public PrometheusMetricsMiddleware(
             ILogger<PrometheusMetricsMiddleware> logger,
             IPrometheusMetricStore metricStore,
-            RequestDelegate next,
             IOptions<PrometheusOptions> options)
         {
             _logger = logger
                 ?? throw new ArgumentNullException(nameof(logger));
             _metricStore = metricStore
                 ?? throw new ArgumentNullException(nameof(metricStore));
-            _next = next
-                ?? throw new ArgumentNullException(nameof(next));
             _options = options?.Value
                 ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public Task Invoke(HttpContext context)
+        public Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             if (context.GetEndpoint() != null)
             {
@@ -55,15 +51,17 @@ namespace Finite.Metrics.Prometheus.AspNetCore
                 return WriteMetricsAsync(context);
             }
 
-            return _next(context);
+            return next(context);
         }
 
         private async Task WriteMetricsAsync(HttpContext context)
         {
             foreach (var metric in _metricStore.GetMetrics())
             {
-                await context.Response.WriteAsync(metric);
-                await context.Response.WriteAsync("\n");
+                await context.Response.WriteAsync(metric,
+                    context.RequestAborted);
+                await context.Response.WriteAsync("\n",
+                    context.RequestAborted);
             }
         }
     }

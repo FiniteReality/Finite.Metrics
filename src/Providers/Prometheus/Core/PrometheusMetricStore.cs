@@ -47,7 +47,7 @@ namespace Finite.Metrics.Prometheus
                     var tagsString = string.Join(",",
                         tags.Select(x => $"{x.Key}=\"{x.Value}\""));
 
-                    yield return ($"{name}{{{tags}}}", value);
+                    yield return ($"{name}{{{tagsString}}}", value);
                 }
                 else
                 {

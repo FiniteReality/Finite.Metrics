@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace Finite.Metrics.Prometheus
 {
@@ -11,6 +11,13 @@ namespace Finite.Metrics.Prometheus
         /// Gets or sets the request path that maps to the Prometheus metrics
         /// endpoint.
         /// </summary>
-        public PathString RequestPath { get; set; }
+        public string RequestPath { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets the endpoint that the Prometheus hosted service
+        /// listens on.
+        /// </summary>
+        /// <value></value>
+        public IPEndPoint ListenEndPoint { get; set; } = null!;
     }
 }

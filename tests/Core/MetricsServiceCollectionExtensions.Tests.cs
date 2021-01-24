@@ -23,8 +23,7 @@ namespace Finite.Metrics.UnitTests
             var method = typeof(MetricsServiceCollectionExtensions)
                 .GetMethod("AddMetrics", new[]
                 {
-                    typeof(IServiceCollection),
-                    typeof(Action<IMetricsBuilder>)
+                    typeof(IServiceCollection)
                 })!;
             var parameter = method.GetParameters().First();
 

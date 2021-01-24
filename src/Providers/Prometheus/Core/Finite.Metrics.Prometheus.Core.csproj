@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
 
-    <Description>Prometheus metrics provider implementation for Finite.Metrics</Description>
+    <Description>Prometheus metrics provider core for Finite.Metrics</Description>
   </PropertyGroup>
 
   <ItemGroup>

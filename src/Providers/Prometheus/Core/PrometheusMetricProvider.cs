@@ -2,10 +2,10 @@
 {
     internal class PrometheusMetricProvider : IMetricProvider
     {
-        private readonly PrometheusMetricStore _metricStore;
+        private readonly IPrometheusMetricStore _metricStore;
 
         public PrometheusMetricProvider(
-            PrometheusMetricStore metricStore)
+            IPrometheusMetricStore metricStore)
         {
             _metricStore = metricStore;
         }

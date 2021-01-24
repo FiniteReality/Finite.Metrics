@@ -8,14 +8,22 @@ namespace Finite.Metrics
     /// <summary>
     /// Prometheus extensions for <see cref="IMetricsBuilder"/>.
     /// </summary>
-    public static class MetricsBuilderOpenTsdbExtensions
+    public static class MetricsBuilderPrometheusExtensions
     {
         /// <summary>
-        /// Adds a Prometheus provider to the factory.
+        /// Adds the minimum essential Prometheus services to the specified
+        /// <see cref="IServiceCollection"/>. Additional services, such as
+        /// hosted service support, must be added separately using the
+        /// <see cref="IMetricsBuilder"/> returned from this method.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public static IMetricsBuilder AddPrometheus(
+        /// <param name="builder">
+        /// The <see cref="IMetricsBuilder"/> to add services to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="IMetricsBuilder"/> that can be used to further
+        /// configure the Prometheus services.
+        /// </returns>
+        public static IMetricsBuilder AddPrometheusCore(
             this IMetricsBuilder builder)
         {
             _ = builder.AddConfiguration();
