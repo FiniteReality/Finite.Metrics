@@ -38,10 +38,13 @@ namespace Finite.Metrics
         public static IMetricFactory Create(Action<IMetricsBuilder> configure)
         {
             var collection = new ServiceCollection();
-            _ = collection.AddMetrics(configure);
+            var builder = collection.AddMetrics();
+
+            configure(builder);
+
             var provider = collection.BuildServiceProvider();
 
-            var factory = provider.GetService<IMetricFactory>();
+            var factory = provider.GetRequiredService<IMetricFactory>();
 
             return new DisposingMetricsFactory(factory, provider);
         }

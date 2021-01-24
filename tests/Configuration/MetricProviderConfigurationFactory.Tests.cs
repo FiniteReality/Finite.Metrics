@@ -28,7 +28,7 @@ namespace Finite.Metrics.Configuration.UnitTests
             var parameter = method.GetParameters().First();
 
             var ex = Assert.Throws<ArgumentNullException>(
-                () => factory.GetConfiguration(null!));
+                () => factory.GetConfiguration(null!))!;
 
             Assert.AreEqual(parameter.Name, ex.ParamName);
         }

@@ -11,7 +11,7 @@ namespace Finite.Metrics.UnitTests
     public class MetricsServiceCollectionExtensionsTests
     {
         /// <summary>
-        /// Ensures that <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, Action{IMetricsBuilder})"/>
+        /// Ensures that <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection)"/>
         /// throws an instance of <see cref="ArgumentNullException"/> when
         /// <c>null</c> is passed as a parameter, and that the exception's
         /// <see cref="ArgumentException.ParamName"/> property was the expected
@@ -28,7 +28,7 @@ namespace Finite.Metrics.UnitTests
             var parameter = method.GetParameters().First();
 
             var ex = Assert.Throws<ArgumentNullException>(
-                () => MetricsServiceCollectionExtensions.AddMetrics(null!));
+                () => MetricsServiceCollectionExtensions.AddMetrics(null!))!;
 
             Assert.AreEqual(parameter.Name, ex.ParamName);
         }
@@ -66,49 +66,6 @@ namespace Finite.Metrics.UnitTests
             _ = collection.AddMetrics();
 
             Assert.DoesNotThrow(() => collection.AddMetrics());
-        }
-
-        /// <summary>
-        /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method calls the passed delegate.
-        /// </summary>
-        [Test]
-        public void AddMetricsWithDelegateCallsDelegate()
-        {
-            var collection = new ServiceCollection();
-
-            _ = collection.AddMetrics(_ => Assert.Pass());
-
-            Assert.Fail();
-        }
-
-        /// <summary>
-        /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method calls the passed delegate with an instance of
-        /// <see cref="IMetricsBuilder"/>.
-        /// </summary>
-        [Test]
-        public void AddMetricsWithDelegatePassedIMetricsBuilder()
-        {
-            var collection = new ServiceCollection();
-
-            _ = collection.AddMetrics(builder => Assert.NotNull(builder));
-        }
-
-        /// <summary>
-        /// Ensures that the <see cref="MetricsServiceCollectionExtensions.AddMetrics(IServiceCollection, System.Action{IMetricsBuilder})"/>
-        /// method calls the passed delegate with an instance of
-        /// <see cref="IMetricsBuilder"/>, whose
-        /// <see cref="IMetricsBuilder.Services"/> property equals the
-        /// container we called <c>AddMetrics</c> on.
-        /// </summary>
-        [Test]
-        public void AddMetricsWithDelegateHasSameContainer()
-        {
-            var collection = new ServiceCollection();
-
-            _ = collection.AddMetrics(
-                builder => Assert.AreEqual(collection, builder.Services));
         }
     }
 }

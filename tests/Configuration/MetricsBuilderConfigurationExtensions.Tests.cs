@@ -54,9 +54,11 @@ namespace Finite.Metrics.Configuration.UnitTests
                 x => x.ServiceType == typeof(MetricsConfiguration));
 
             Assert.NotNull(metricsConfigurationDescriptor);
+            Assert.NotNull(
+                metricsConfigurationDescriptor!.ImplementationInstance);
 
             var metricsConfiguration = (MetricsConfiguration)
-                metricsConfigurationDescriptor!.ImplementationInstance;
+                metricsConfigurationDescriptor!.ImplementationInstance!;
 
             Assert.AreEqual(configuration, metricsConfiguration.Configuration);
         }

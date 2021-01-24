@@ -82,7 +82,7 @@ namespace Finite.Metrics.UnitTests
             var parameter = method.GetParameters().First();
 
             var ex = Assert.Throws<ArgumentNullException>(
-                () => factory.AddProvider(null!));
+                () => factory.AddProvider(null!))!;
 
             Assert.AreEqual(parameter.Name, ex.ParamName);
         }

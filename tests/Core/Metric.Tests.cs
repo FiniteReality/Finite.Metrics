@@ -69,7 +69,7 @@ namespace Finite.Metrics.UnitTests
             };
 
             var exception = Assert.Throws<AggregateException>(
-                () => metric.IsEnabled());
+                () => metric.IsEnabled())!;
 
             Assert.AreEqual(1, exception.InnerExceptions.Count);
             Assert.IsInstanceOf<NotImplementedException>(
@@ -130,14 +130,14 @@ namespace Finite.Metrics.UnitTests
             };
 
             var exception = Assert.Throws<AggregateException>(
-                () => metric.Log(1));
+                () => metric.Log(1))!;
 
             Assert.AreEqual(1, exception.InnerExceptions.Count);
             Assert.IsInstanceOf<NotImplementedException>(
                 exception.InnerExceptions[0]);
 
             exception = Assert.Throws<AggregateException>(
-                () => metric.Log(1, metric));
+                () => metric.Log(1, metric))!;
 
             Assert.AreEqual(1, exception.InnerExceptions.Count);
             Assert.IsInstanceOf<NotImplementedException>(

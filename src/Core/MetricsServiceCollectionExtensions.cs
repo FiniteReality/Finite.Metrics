@@ -21,28 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// The <see cref="IServiceCollection"/> so that additional calls can
         /// be chained.
         /// </returns>
-        public static IServiceCollection AddMetrics(
+        public static IMetricsBuilder AddMetrics(
             this IServiceCollection services)
-            => AddMetrics(services, builder => { });
-
-
-        /// <summary>
-        /// Adds metrics services to the specified
-        /// <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="services">
-        /// The <see cref="IServiceCollection"/> to add services to.
-        /// </param>
-        /// <param name="configure">
-        /// The <see cref="IMetricsBuilder"/> configuration delegate.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IServiceCollection"/> so that additional calls can
-        /// be chained.
-        /// </returns>
-        public static IServiceCollection AddMetrics(
-            this IServiceCollection services,
-            Action<IMetricsBuilder> configure)
         {
             if (services is null)
                 throw new ArgumentNullException(nameof(services));
@@ -51,8 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .Singleton<IMetricFactory, MetricFactory>());
             services.TryAdd(ServiceDescriptor.Singleton<IMetric, Metric>());
 
-            configure(new MetricsBuilder(services));
-            return services;
+            return new MetricsBuilder(services);
         }
     }
 }

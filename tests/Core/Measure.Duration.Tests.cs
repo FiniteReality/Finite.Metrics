@@ -24,7 +24,7 @@ namespace Finite.Metrics.UnitTests
             var parameter = method.GetParameters().First();
 
             var ex = Assert.Throws<ArgumentNullException>(
-                () => Measure.Duration(null!));
+                () => Measure.Duration(null!))!;
 
             Assert.AreEqual(parameter.Name, ex.ParamName);
         }
@@ -72,7 +72,7 @@ namespace Finite.Metrics.UnitTests
             var parameter = method.GetParameters().First();
 
             var ex = Assert.Throws<ArgumentNullException>(
-                () => Measure.Duration(null!, new object()));
+                () => Measure.Duration(null!, new object()))!;
 
             Assert.AreEqual(parameter.Name, ex.ParamName);
         }
