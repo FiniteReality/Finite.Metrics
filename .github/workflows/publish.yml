@@ -3,7 +3,7 @@ name: Publish Finite.Metrics to MyGet
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - 'docs/**'
   pull_request:
